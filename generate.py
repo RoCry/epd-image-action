@@ -41,11 +41,15 @@ def generate_all():
 
     # Get viewport from environment variable or use default
     viewports = os.environ.get('VIEWPORT_SIZE', '250x122,400x300').split(',')
+    # when debug, we may only want to generate some specific templates
+    whitelist_keyword = os.environ.get('WHITELIST')
 
     # Get all HTML files from htmls directory
     html_files = [f for f in os.listdir("htmls") if f.endswith('.html')]
 
     for html_file in html_files:
+        if whitelist_keyword and whitelist_keyword not in html_file:
+            continue
         template_path = os.path.join("htmls", html_file)
 
         for viewport in viewports:
