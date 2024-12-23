@@ -3,6 +3,7 @@ def get_today_movie_info():
     import requests
     from datetime import datetime
     import json
+    from datetime import timezone, timedelta
 
     # Fetch data from URL
     url = "https://raw.githubusercontent.com/yes1am/douban-movie-calendar/refs/heads/master/douban-movie-calendar-2024.json"
@@ -12,8 +13,10 @@ def get_today_movie_info():
     except:
         return None
 
-    # Get today's date in the format used in comments (YYYY-MM-DD)
-    today = datetime.now().strftime("%Y-%m-%d")
+    # Get today's date in China timezone (UTC+8)
+    # hardcode for now
+    tz = timezone(timedelta(hours=8))
+    today = datetime.now(tz).strftime("%Y-%m-%d")
     
     # First try to find exact match for today
     for movie in movies:
