@@ -39,22 +39,23 @@ def generate_all():
     os.makedirs(DIST_FOLDER, exist_ok=True)
 
     # Get viewport from environment variable or use default
-    viewport = os.environ.get('VIEWPORT_SIZE', '250x122')
+    viewports = os.environ.get('VIEWPORT_SIZE', '250x122,400x300').split(',')
 
     # Get all HTML files from htmls directory
     html_files = [f for f in os.listdir("htmls") if f.endswith('.html')]
     
     for html_file in html_files:
         template_path = os.path.join("htmls", html_file)
-        output_filename = html_file.replace('.html', '.png')
-        output_path = os.path.join(DIST_FOLDER, output_filename)
-        
-        output_path = generate_image_for_html(
-            template_path,
-            output_path,
-            viewport
-        )
-        print(f"Generated {output_path}")
+
+        for viewport in viewports:
+            output_filename = html_file.replace('.html', f'_{viewport}.png')
+            output_path = os.path.join(DIST_FOLDER, output_filename)
+            output_path = generate_image_for_html(
+                template_path,
+                output_path,
+                viewport
+            )
+            print(f"Generated {output_path}")
 
 if __name__ == "__main__":
     generate_all()
