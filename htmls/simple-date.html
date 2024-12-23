@@ -1,0 +1,52 @@
+<%
+from datetime import datetime
+today = datetime.now()
+%>
+<html>
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Impact';
+            -webkit-font-smoothing: none;
+        }
+        body {
+            background: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+        }
+        .date-card {
+            text-align: center;
+            padding: 0;
+            width: 90%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .weekday {
+            color: #FF0000;
+            font-size: min(30vh, 35vw);
+            font-weight: 500;
+            line-height: 0.9;
+        }
+        .date {
+            font-size: min(65vh, 70vw);
+            font-weight: 400;
+            color: #000000;
+            line-height: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="date-card">
+        <div class="weekday">${today.strftime('%a').upper()}</div>
+        <div class="date">${today.strftime('%d')}</div>
+    </div>
+</body>
+</html>
