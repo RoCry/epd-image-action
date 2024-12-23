@@ -51,16 +51,20 @@ def generate_all():
         for viewport in viewports:
             output_filename = html_file.replace('.html', f'_{viewport}.png')
             output_path = os.path.join(DIST_FOLDER, output_filename)
-            output_path = generate_image_for_html(
-                template_path,
-                output_path,
-                viewport
-            )
-            # generate a binary jpg for openepaperlink(which only supports jpg for now)
-            binary_output_path = output_path.replace('.png', '.jpg')
-            # TODO: hardcode the palette for now
-            remap_image(output_path, binary_output_path, palette=PALETTE_BWR)
-            print(f"Generated {output_path}")
+            try:
+                output_path = generate_image_for_html(
+                    template_path,
+                    output_path,
+                    viewport
+                )
+                # generate a binary jpg for openepaperlink(which only supports jpg for now)
+                binary_output_path = output_path.replace('.png', '.jpg')
+                # TODO: hardcode the palette for now
+                remap_image(output_path, binary_output_path, palette=PALETTE_BWR)
+                print(f"Generated {output_path}")
+            except Exception as e:
+                print(f"Error generating {output_path}: {str(e)}")
+                continue
 
 if __name__ == "__main__":
     generate_all()
