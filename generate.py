@@ -4,17 +4,16 @@ import tempfile
 import os
 
 def generate_image_for_html(html_path: str, output_path: str, viewport: str):
-    # TODO: when using puppeteer screenshot, the font seems doesnt load success sometimes
-    # change it to use js script to generate the image
+    # Use Node.js script to generate screenshot
     subprocess.run(
         [
-            "puppeteer",
-            "screenshot",
+            "node",
+            "screenshot.js",
             html_path,
             output_path,
-            "--viewport",
             viewport,
         ],
+        check=True,  # This will raise an exception if the command fails
     )
     return output_path
 
