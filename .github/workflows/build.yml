@@ -10,6 +10,8 @@ on:
 jobs:
   generate_images:
     runs-on: macos-latest  # `webkit-font-smoothing` only works on macos
+    env:
+      VIEWPORT_SIZE: "400x300"  # Change this value as needed
     steps:
     - name: Check out repo
       uses: actions/checkout@v3

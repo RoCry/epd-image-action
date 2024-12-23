@@ -38,6 +38,9 @@ def generate_all():
     DIST_FOLDER = "dist/images"
     os.makedirs(DIST_FOLDER, exist_ok=True)
 
+    # Get viewport from environment variable or use default
+    viewport = os.environ.get('VIEWPORT_SIZE', '250x122')
+
     # Get all HTML files from htmls directory
     html_files = [f for f in os.listdir("htmls") if f.endswith('.html')]
     
@@ -49,7 +52,7 @@ def generate_all():
         output_path = generate_image_for_html(
             template_path,
             output_path,
-            "255x122"
+            viewport
         )
         print(f"Generated {output_path}")
 
