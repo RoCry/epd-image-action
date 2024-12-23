@@ -1,0 +1,37 @@
+<%
+from plugin.binance import get_binance_price
+
+symbol = "BTCUSDT"
+try:
+    price = f"{get_binance_price(symbol):,.2f}"
+except Exception as e:
+    price = "Error"
+%>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Press Start 2P';
+            -webkit-font-smoothing: none;
+        }
+        body {
+            background: black;
+            margin: 10px;
+            color: white;
+        }
+        .price {
+            font-size: 24px;
+            color: red;
+        }
+        .symbol {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="symbol">${symbol}</div>
+<br>
+<div class="price">$${price}</div>
+</body>
+</html> 

@@ -1,7 +1,6 @@
 import subprocess
 import os
 from mako.template import Template
-from datetime import datetime
 
 def render_template(template_path: str, **kwargs) -> str:
     """Render a Mako template with given context"""
@@ -50,7 +49,7 @@ def generate_all():
         output_path = generate_image_for_html(
             template_path,
             output_path,
-            "255x122"  # Consistent viewport size for all images
+            "255x122"
         )
         print(f"Generated {output_path}")
 
