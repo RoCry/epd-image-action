@@ -1,11 +1,8 @@
 <%
-from plugin.binance import get_binance_price
+from plugins.binance import get_binance_price
 
 symbol = "BTCUSDT"
-try:
-    price = f"{get_binance_price(symbol):,.2f}"
-except Exception as e:
-    price = "Error"
+price = f"{get_binance_price(symbol):,.2f}"
 %>
 <html>
 <head>
