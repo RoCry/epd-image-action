@@ -1,0 +1,57 @@
+name: Build and generate images then upload to GitHub Releases
+
+on:
+  push:
+    branches:
+    - master
+  workflow_dispatch:
+  # schedule:
+  #   - cron:  '*/30 * * * *' # every 30min
+jobs:
+  generate_images:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v3
+      # We need full history to introspect created/updated:
+      with:
+        fetch-depth: 0
+        path: master
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    - uses: actions/cache@v3
+      name: Configure pip caching
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: Cache Playwright browsers
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/ms-playwright/
+        key: ${{ runner.os }}-browsers
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r master/requirements.txt
+    - name: Setup Chrome
+      uses: browser-actions/setup-chrome@latest
+    - name: Install and setup Puppeteer
+      run: |
+        npm install -g puppeteer puppeteer-cli
+        PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm install -g puppeteer-cli
+        echo "PUPPETEER_EXECUTABLE_PATH=$(which chrome)" >> $GITHUB_ENV
+    - name: Generate images
+      run: |-
+        cd master
+        python generate.py
+    - name: Release images
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: latest
+        draft: false
+        files: |
+          master/dist/images/*
