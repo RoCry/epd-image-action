@@ -48,10 +48,21 @@ jobs:
       run: |
         cd master
         python generate.py
+    - name: Prepare release body
+      id: release_body
+      run: |
+        cd master/dist/images
+        REPO="${GITHUB_REPOSITORY}"
+        echo "body<<EOF" >> $GITHUB_OUTPUT
+        for f in *.png; do
+          echo "- ![$f](https://github.com/${REPO}/releases/download/latest/$f)" >> $GITHUB_OUTPUT
+        done
+        echo "EOF" >> $GITHUB_OUTPUT
     - name: Release images
       uses: softprops/action-gh-release@v2
       with:
         tag_name: latest
         draft: false
+        body: ${{ steps.release_body.outputs.body }}
         files: |
           master/dist/images/*
