@@ -9,7 +9,7 @@ on:
   #   - cron:  '*/30 * * * *' # every 30min
 jobs:
   generate_images:
-    runs-on: macos-latest
+    runs-on: macos-latest  # `webkit-font-smoothing` only works on macos
     steps:
     - name: Check out repo
       uses: actions/checkout@v3
