@@ -1,3 +1,7 @@
+# WARNING: this method only works outside GitHub Actions:
+# Binance has restrictions on API access from cloud/datacenter IP ranges.
+# To fix this, you'll need to use Binance's API key authentication, even for public endpoints.
+
 # symbol e.g. BTCUSDT
 def get_binance_price(symbol: str) -> float:
     """
