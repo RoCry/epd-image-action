@@ -1,8 +1,9 @@
 <%
 from plugins.calendar_lunar import now_lunar
 lunar = now_lunar()
-month = lunar.getMonth()
-day = lunar.getDay()
+solar = lunar.getSolar()
+month = solar.getMonth()
+day = solar.getDay()
 year_chinese = lunar.getYearInChinese()
 month_chinese = lunar.getMonthInChinese()
 day_chinese = lunar.getDayInChinese()
