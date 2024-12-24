@@ -1,0 +1,79 @@
+<%
+from plugins.calendar_lunar import now_lunar
+lunar = now_lunar()
+month = lunar.getMonth()
+day = lunar.getDay()
+year_chinese = lunar.getYearInChinese()
+month_chinese = lunar.getMonthInChinese()
+day_chinese = lunar.getDayInChinese()
+week_chinese = lunar.getWeekInChinese()
+time_yi = ', '.join(lunar.getTimeYi()[:10])
+time_ji = ', '.join(lunar.getTimeJi()[:10])
+%>
+<html>
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Gill Sans';
+            -webkit-font-smoothing: none;
+            box-sizing: border-box;
+        }
+        body {
+            width: 400px;
+            height: 300px;
+            background: white;
+            padding: 5px;
+        }
+        .calendar-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            padding: 10px;
+        }
+        .year {
+            font-size: 24px;
+            color: black;
+        }
+        .solar-date {
+            font-size: 64px;
+            font-weight: bold;
+            line-height: 1;
+            margin: 10px 0;
+            color: black;
+        }
+        .month-week {
+            font-size: 28px;
+            color: black;
+        }
+        .fortune {
+            padding: 15px;
+            font-size: 20px;
+        }
+        .yi {
+            color: black;
+            margin-bottom: 8px;
+        }
+        .ji {
+            color: #FF0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="calendar-card">
+        <div class="header">
+            <div class="year">${year_chinese}年</div>
+            <div class="solar-date">${month}月${day}日</div>
+            <div class="month-week">${month_chinese}月${day_chinese} · 星期${week_chinese}</div>
+            <!-- <div class="divider"></div> -->
+        </div>
+        <div class="fortune">
+            <div class="yi">宜：${time_yi}</div>
+            <div class="ji">忌：${time_ji}</div>
+        </div>
+    </div>
+</body>
+</html>
