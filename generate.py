@@ -9,14 +9,16 @@ def render_template(template_path: str, **kwargs) -> str:
     return template.render(**kwargs)
 
 def generate_image_for_html(template_path: str, output_path: str, viewport: str, **template_kwargs):
-    # Create a temporary rendered HTML file
-    temp_html_path = template_path.replace('.html', '_rendered.html')
+    # Create rendered HTML file in dist/htmls
+    dist_html_dir = "dist/htmls"
+    os.makedirs(dist_html_dir, exist_ok=True)
+    rendered_html_path = os.path.join(dist_html_dir, os.path.basename(template_path).replace('.html', '_rendered.html'))
     
     # Render the template
     rendered_html = render_template(template_path, **template_kwargs)
     
-    # Write the rendered HTML to a temporary file
-    with open(temp_html_path, 'w') as f:
+    # Write the rendered HTML to the dist folder
+    with open(rendered_html_path, 'w') as f:
         f.write(rendered_html)
 
     # Use Node.js script to generate screenshot
@@ -24,15 +26,13 @@ def generate_image_for_html(template_path: str, output_path: str, viewport: str,
         [
             "node",
             "screenshot.js",
-            temp_html_path,
+            rendered_html_path,
             output_path,
             viewport,
         ],
         check=True,
     )
 
-    # Clean up temporary file
-    os.remove(temp_html_path)
     return output_path
 
 def generate_all():
