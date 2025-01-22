@@ -169,3 +169,5 @@ yarn-error.log*
 
 # Generated screenshots
 dist/
+
+.env
