@@ -6,7 +6,7 @@ on:
     - master
   workflow_dispatch:
   schedule:
-    - cron: '0 */2 * * *'  # every 2 hours
+    - cron: '*/30 * * * *'  # every 30 minutes
 jobs:
   generate_images:
     runs-on: macos-latest  # `webkit-font-smoothing` only works on macos
